@@ -5,12 +5,16 @@
           <div class="auth-avatar">
             <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
           </div>
-          <form [formGroup]="loginForm" (submit)="login(userData)">
+          <form [formGroup]="loginForm">
             <div class="form-group">
-              <label for="PhoneNumber">PhoneNumber : </label>
-              <input type="text" name="PhoneNumber" class="form-control" placeholder="PhoneNumber" formControlName="PhoneNumber">
+              <label for="PhoneNumber">Phone Number : </label>
+              <input type="number" name="PhoneNumber" class="form-control no-arrow" placeholder="Phone Number" formControlName="PhoneNumber">
               <div *ngIf="loginForm.controls.PhoneNumber.errors && loginForm.controls.PhoneNumber.touched">
                 <span *ngIf="loginForm.controls.PhoneNumber.errors.required" class="err">Phone Number is required.</span>
+                <span *ngIf="loginForm.controls.PhoneNumber.errors.pattern" class="err">Invalid Phone Number.</span>
+              </div>
+              <div class="text-right resend-Otp co-white" *ngIf="isEnableOTP">
+                <button class="btn-resend" (click)="changeNumber()">Change Phone Number</button>
               </div>
             </div>  
            
@@ -21,11 +25,11 @@
                 <span *ngIf="loginForm.controls.Otp.errors.required" class="err">Please enter OTP</span>
               </div>
               <div class="text-right resend-Otp co-white">
-                {{ message }} <button [disabled]="message!=0" (click)="sendOtp(false)" class="btn-resend">resend OTP ?</button>
+                {{ message }} <button [disabled]="message!=0" (click)="resendOtp()" class="btn-resend">resend OTP ?</button>
               </div>
             </div>
             <div class="text-center">
-                <button *ngIf="!isEnableOTP" (click)="sendOtp(true)" [disabled]="loginForm.controls.PhoneNumber.invalid" class="btn">Send OTP</button>
+                <button *ngIf="!isEnableOTP" (click)="sendOtp()" [disabled]="loginForm.controls.PhoneNumber.invalid" class="btn">Send OTP</button>
                 <button *ngIf="isEnableOTP" (click)="submit()" [disabled]="loginForm.controls.Otp.invalid" class="btn">submit</button>
             </div>
           </form>

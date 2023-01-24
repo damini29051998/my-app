@@ -11,12 +11,8 @@ import { map } from "rxjs/operators";
 export class UserService {
 
   baseURL = environment.baseUrl;
-  private userDataSource = new BehaviorSubject({PhoneNumber : '', Otp : ''});
-  currentUserData = this.userDataSource.asObservable();
+  
   constructor( private http: HttpClient) { }
-  changeData(newUserData) {
-    this.userDataSource.next(newUserData)
-  }
 
   sendOtp(data): Observable<string> {
     let req= {
