@@ -1,0 +1,35 @@
+<div class="row" style="margin-top: 150px">
+    <div class="col-md-5 offset-md-4 col-sm-6 offset-sm-3">
+      <div class="card auth">
+        <div class="card-body auth-card">
+          <div class="auth-avatar">
+            <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+          </div>
+          <form [formGroup]="loginForm" (submit)="login(userData)">
+            <div class="form-group">
+              <label for="PhoneNumber">PhoneNumber : </label>
+              <input type="text" name="PhoneNumber" class="form-control" placeholder="PhoneNumber" formControlName="PhoneNumber">
+              <div *ngIf="loginForm.controls.PhoneNumber.errors && loginForm.controls.PhoneNumber.touched">
+                <span *ngIf="loginForm.controls.PhoneNumber.errors.required" class="err">Phone Number is required.</span>
+              </div>
+            </div>  
+           
+            <div class="form-group" *ngIf="isEnableOTP">
+              <label for="Otp">OTP : </label>
+              <input type="Otp" name="Otp" class="form-control" placeholder="OTP" formControlName="Otp">
+              <div *ngIf="loginForm.controls.Otp.errors && loginForm.controls.Otp.touched">
+                <span *ngIf="loginForm.controls.Otp.errors.required" class="err">Please enter OTP</span>
+              </div>
+              <div class="text-right resend-Otp co-white">
+                {{ message }} <button [disabled]="message!=0" (click)="sendOtp(false)" class="btn-resend">resend OTP ?</button>
+              </div>
+            </div>
+            <div class="text-center">
+                <button *ngIf="!isEnableOTP" (click)="sendOtp(true)" [disabled]="loginForm.controls.PhoneNumber.invalid" class="btn">Send OTP</button>
+                <button *ngIf="isEnableOTP" (click)="submit()" [disabled]="loginForm.controls.Otp.invalid" class="btn">submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
